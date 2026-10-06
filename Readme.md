@@ -1,6 +1,11 @@
-# ORDERING PROGRAM USING CONSTRUCTOR WITH INHERITANCE AND ENCAPSULATION
+# COFFEE ORDERING PROGRAM USING CONSTRUCTOR, INHERITANCE, AND ENCAPSULATION
 
-This program demonstrates basic Java OOP concepts using an Ordering Program.
+This program demonstrates basic Java OOP concepts by creating a simple **Coffee Ordering Program**.
+
+The program uses a parent class called `OrderProgram` and two child classes:
+
+* `CoffeeOrder`
+* `BreadOrder`
 
 The main concepts used are:
 
@@ -9,104 +14,224 @@ The main concepts used are:
 * Encapsulation
 * `super()`
 * Method Overriding
+* `@Override`
 
 ---
 
-## CONSTRUCTOR
+## PROGRAM STRUCTURE
+
+The program has one parent class and two child classes:
+
+```text
+                    OrderProgram
+                   /            \
+                  /              \
+         CoffeeOrder          BreadOrder
+```
+
+### `OrderProgram`
+
+Contains the common information shared by different types of orders:
+
+```text
+customerName
+item
+price
+quantity
+```
+
+### `CoffeeOrder`
+
+Inherits the common information from `OrderProgram` and adds coffee-specific information:
+
+```text
+coffeeName
+coffeeType
+coffeeSize
+coffeeTemperature
+coffeeSugarLevel
+```
+
+### `BreadOrder`
+
+Also inherits the common information from `OrderProgram` and adds bread-specific information:
+
+```text
+breadType
+flavor
+size
+```
+
+---
+
+# CONSTRUCTOR
 
 A **constructor** is used to initialize an object when the object is created.
 
-The constructor receives values and assigns them to the object's fields.
+The `OrderProgram` class has a constructor that receives the basic order information:
 
 ```java
-public Order(String customerName, String item, double price) {
+public OrderProgram(String customerName, String item, double price, int quantity) {
+
     this.customerName = customerName;
     this.item = item;
     this.price = price;
+    this.quantity = quantity;
+
 }
 ```
 
 For example:
 
 ```java
-Order order = new Order("Christian", "Burger", 120.00);
+OrderProgram order =
+    new OrderProgram("Christian", "Coffee", 120.00, 2);
 ```
 
 The values are passed to the constructor:
 
 ```text
 customerName = "Christian"
-item         = "Burger"
+item         = "Coffee"
 price        = 120.00
+quantity     = 2
 ```
 
 ### Why use a constructor?
 
-Instead of creating an empty object and assigning each value separately, the constructor allows us to initialize the object immediately.
+Instead of creating an empty object and assigning every value separately, the constructor allows us to initialize the object immediately when it is created.
 
 ---
 
-## INHERITANCE
+# INHERITANCE
 
-**Inheritance** allows one class to acquire the accessible properties (fields) and behaviors (methods) of another class.
+**Inheritance** allows a child class to acquire accessible properties and methods from a parent class.
+
+In this program:
 
 ```java
-class FoodOrder extends Order
+class CoffeeOrder extends OrderProgram
+```
+
+and:
+
+```java
+class BreadOrder extends OrderProgram
 ```
 
 Here:
 
 ```text
-Order      = Parent Class
-FoodOrder  = Child Class
-```
+OrderProgram = Parent Class
 
-`FoodOrder` inherits the accessible methods from `Order`, such as:
-
-```java
-getCustomerName()
-getItem()
-getPrice()
-displayOrder()
+CoffeeOrder  = Child Class
+BreadOrder   = Child Class
 ```
 
 The relationship is:
 
 ```text
-Order
-  |
-  ↓
-FoodOrder
+                 OrderProgram
+                /            \
+               ↓              ↓
+        CoffeeOrder       BreadOrder
 ```
 
-The child class can also have its own fields and methods in addition to the inherited ones.
+Both child classes inherit the common information from `OrderProgram`.
 
-For example:
+The parent class contains:
 
-```java
-class FoodOrder extends Order {
-
-    private int quantity;
-}
+```text
+customerName
+item
+price
+quantity
 ```
 
-`quantity` belongs specifically to `FoodOrder`, while `customerName`, `item`, and `price` come from `Order`.
+Instead of declaring these variables again in both child classes, `CoffeeOrder` and `BreadOrder` inherit them from `OrderProgram`.
 
 ---
 
-## ENCAPSULATION
+## COFFEE ORDER
 
-**Encapsulation** means hiding/protecting the data and controlling how it can be accessed.
+`CoffeeOrder` has its own coffee-specific variables:
 
-The fields in the class are declared as `private`:
+```java
+private String coffeeName;
+private String coffeeType;
+private String coffeeSize;
+private String coffeeTemperature;
+private String coffeeSugarLevel;
+```
+
+So the complete structure is:
+
+```text
+CoffeeOrder
+
+Inherited from OrderProgram:
+    customerName
+    item
+    price
+    quantity
+
+Own variables:
+    coffeeName
+    coffeeType
+    coffeeSize
+    coffeeTemperature
+    coffeeSugarLevel
+```
+
+---
+
+## BREAD ORDER
+
+`BreadOrder` also inherits the common variables from `OrderProgram`.
+
+It has its own variables:
+
+```java
+private String breadType;
+private String flavor;
+private String size;
+```
+
+So the structure is:
+
+```text
+BreadOrder
+
+Inherited from OrderProgram:
+    customerName
+    item
+    price
+    quantity
+
+Own variables:
+    breadType
+    flavor
+    size
+```
+
+---
+
+# ENCAPSULATION
+
+**Encapsulation** means protecting the data inside a class and controlling how that data can be accessed.
+
+The variables in the classes are declared as `private`.
+
+For example:
 
 ```java
 private String customerName;
 private String item;
 private double price;
+private int quantity;
 ```
 
-Because they are `private`, they cannot be directly accessed from outside the class.
+Because these variables are `private`, they cannot be directly accessed from outside the class.
 
 For example:
 
@@ -116,7 +241,7 @@ order.price;
 
 is not allowed.
 
-Instead, we use methods such as getters:
+Instead, we use getter methods:
 
 ```java
 public double getPrice() {
@@ -124,97 +249,140 @@ public double getPrice() {
 }
 ```
 
-Then we can access the price through:
+Then we can access the value through:
 
 ```java
 order.getPrice();
 ```
 
-### Simple idea:
+The same concept is used for the other variables.
+
+### Simple idea
 
 ```text
 private data
      ↓
-protected/controlled inside the class
+protected inside the class
      ↓
 accessed through methods
+     ↓
+getters / setters
 ```
 
-Encapsulation helps prevent direct and uncontrolled modification of the object's data.
+Encapsulation helps prevent direct and uncontrolled access to an object's data.
 
 ---
 
-## `SUPER()`
+# `SUPER()`
 
 `super()` is used to call the **parent class constructor**.
 
-Example:
+For example, the `CoffeeOrder` constructor contains:
 
 ```java
-public FoodOrder(String customerName, String item, double price, int quantity) {
-    super(customerName, item, price);
-    this.quantity = quantity;
+public CoffeeOrder(
+        String customerName,
+        String item,
+        double price,
+        int quantity,
+        String coffeeName,
+        String coffeeType,
+        String coffeeSize,
+        String coffeeTemperature,
+        String coffeeSugarLevel
+) {
+
+    super(customerName, item, price, quantity);
+
+    this.coffeeName = coffeeName;
+    this.coffeeType = coffeeType;
+    this.coffeeSize = coffeeSize;
+    this.coffeeTemperature = coffeeTemperature;
+    this.coffeeSugarLevel = coffeeSugarLevel;
 }
 ```
 
 The:
 
 ```java
-super(customerName, item, price);
+super(customerName, item, price, quantity);
 ```
 
 calls the constructor of the parent class:
 
 ```java
-public Order(String customerName, String item, double price) {
+public OrderProgram(
+        String customerName,
+        String item,
+        double price,
+        int quantity
+) {
+
     this.customerName = customerName;
     this.item = item;
     this.price = price;
+    this.quantity = quantity;
 }
 ```
 
-So instead of initializing the parent class fields again inside `FoodOrder`, we let the parent constructor handle them.
+This allows the parent class to initialize the common order information.
 
-### Simple idea:
+The child class then initializes its own coffee-specific information.
+
+### Simple idea
 
 ```text
-FoodOrder constructor
+CoffeeOrder constructor
         |
         ↓
 super(...)
         |
         ↓
-Order constructor
+OrderProgram constructor
         |
         ↓
-initializes customerName
-initializes item
-initializes price
+initializes common information
+        |
+        ├── customerName
+        ├── item
+        ├── price
+        └── quantity
 ```
 
 ---
 
-## METHOD OVERRIDING
+# METHOD OVERRIDING
 
-**Method overriding** happens when the child class creates its own version of a method that already exists in the parent class.
+**Method overriding** happens when a child class creates its own version of a method that already exists in the parent class.
 
-The parent class has:
+The parent class contains:
 
 ```java
 public void displayOrder() {
-    System.out.println("Customer: " + customerName);
-    System.out.println("Item: " + item);
-    System.out.println("Price: ₱" + price);
+
+    System.out.println("Customer Name : " + customerName);
+    System.out.println("Item Name     : " + item);
+    System.out.println("Item Price    : " + price);
+    System.out.println("Quantity      : " + quantity);
+
 }
 ```
 
-The child class also has:
+`CoffeeOrder` then overrides the method:
 
 ```java
 @Override
 public void displayOrder() {
+
     super.displayOrder();
-    System.out.println("Quantity: " + quantity);
+
+    System.out.println("Category      : Coffee");
+    System.out.println("Coffee Name   : " + coffeeName);
+    System.out.println("Coffee Type   : " + coffeeType);
+    System.out.println("Coffee Size   : " + coffeeSize);
+    System.out.println("Temperature   : " + coffeeTemperature);
+    System.out.println("Sugar Level   : " + coffeeSugarLevel);
+    System.out.println("Total Price   : " + calculateTotal());
 }
 ```
 
@@ -224,24 +392,43 @@ The child is basically saying:
 
 That's **method overriding**.
 
-The parent version:
+---
+
+# `SUPER.DISPLAYORDER()`
+
+Inside the overridden method, we use:
 
 ```java
-displayOrder()
+super.displayOrder();
 ```
 
-and the child version:
+This calls the **parent class's version** of `displayOrder()`.
+
+So:
 
 ```java
 @Override
-displayOrder()
+public void displayOrder() {
+
+    super.displayOrder();
+
+    // Additional CoffeeOrder information
+}
 ```
 
-have the same method name and parameters, but the child changes what the method does.
+means:
+
+```text
+Run the parent's displayOrder()
+            ↓
+Then run CoffeeOrder's additional display information
+```
+
+This prevents us from having to rewrite the parent's display logic again.
 
 ---
 
-## `@OVERRIDE`
+# `@OVERRIDE`
 
 `@Override` tells Java that the method is intended to override a method from the parent class.
 
@@ -250,11 +437,12 @@ Example:
 ```java
 @Override
 public void displayOrder() {
+
     ...
 }
 ```
 
-It also helps detect mistakes.
+It also helps Java detect mistakes.
 
 For example, if the parent has:
 
@@ -273,65 +461,82 @@ Java will give an error because `displayOrders()` does not match the parent's me
 
 ---
 
-## INHERITANCE VS OVERRIDING
+# INHERITANCE VS OVERRIDING
 
-These two concepts are related but they are **not the same**.
+These two concepts are related, but they are **not the same**.
 
-### Inheritance
+## Inheritance
 
-**Inheritance = ginagamit/naminana mo yung accessible methods and properties ng parent class.**
+**Inheritance = the child class gets accessible properties and methods from the parent class.**
 
 Example:
 
 ```java
-class FoodOrder extends Order
+class CoffeeOrder extends OrderProgram
 ```
 
-`FoodOrder` can use inherited methods such as:
+`CoffeeOrder` inherits the common functionality from `OrderProgram`.
+
+```text
+OrderProgram
+    |
+    ↓
+CoffeeOrder
+```
+
+The child can use methods such as:
 
 ```java
 getCustomerName()
 getItem()
 getPrice()
+getQuantity()
 displayOrder()
 ```
 
 ---
 
-### Overriding
+## Overriding
 
-**Overriding = binabago o nire-redefine mo ang behavior ng inherited method sa child class.**
+**Overriding = the child class changes or redefines the behavior of an inherited method.**
 
 Example:
 
 ```java
 @Override
 public void displayOrder() {
+
     super.displayOrder();
-    System.out.println("Quantity: " + quantity);
+
+    System.out.println("Category : Coffee");
 }
 ```
 
-The child is using the same method name:
+The child uses the same method name:
 
 ```text
 displayOrder()
 ```
 
-but gives it additional/different behavior.
+but provides its own implementation.
 
 ---
 
-## SIMPLE WAY TO REMEMBER
+# SIMPLE WAY TO REMEMBER
 
 ```text
 INHERITANCE
+
     ↓
-Child gets accessible properties and methods from Parent.
+
+Child gets accessible things from Parent.
+
 
 OVERRIDING
+
     ↓
-Child changes/redefines the behavior of an inherited method.
+
+Child creates its own version of an inherited method.
 ```
 
 Or simply:
@@ -344,60 +549,140 @@ Overriding = "I will make my own version of this method."
 
 ---
 
-## OOP STRUCTURE OF THE PROGRAM
+# CALCULATING THE TOTAL PRICE
+
+Both `CoffeeOrder` and `BreadOrder` have a `calculateTotal()` method.
+
+The calculation uses:
 
 ```text
-                    Order
-                     |
-                     | inheritance
-                     ↓
-                 FoodOrder
-                     |
-                     ↓
-              displayOrder()
-                 overridden
+Price × Quantity
 ```
 
-### Order
+For example:
 
-Contains the common information:
+```text
+Price = ₱120
+Quantity = 2
+
+Total = ₱120 × 2
+
+Total = ₱240
+```
+
+In `CoffeeOrder`:
+
+```java
+public double calculateTotal() {
+    return getPrice() * getQuantity();
+}
+```
+
+`getPrice()` and `getQuantity()` are inherited functionality that allows the child class to access the parent's private data safely through methods.
+
+---
+
+# OOP STRUCTURE OF THE PROGRAM
+
+```text
+                         OrderProgram
+                       /              \
+                      /                \
+                     ↓                  ↓
+              CoffeeOrder          BreadOrder
+                  |                     |
+                  |                     |
+          Coffee information      Bread information
+                  |                     |
+                  ↓                     ↓
+           displayOrder()        displayOrder()
+                  |                     |
+                  ↓                     ↓
+              overridden             overridden
+```
+
+## `OrderProgram`
+
+Contains common order information:
 
 ```text
 customerName
 item
 price
-```
-
-### FoodOrder
-
-Inherits the common information from `Order` and adds:
-
-```text
 quantity
 ```
 
-It also overrides:
+It also contains:
 
 ```text
+getCustomerName()
+getItem()
+getPrice()
+getQuantity()
 displayOrder()
 ```
 
-so it can display the additional `quantity` information.
+---
+
+## `CoffeeOrder`
+
+Inherits the common information from `OrderProgram` and adds:
+
+```text
+coffeeName
+coffeeType
+coffeeSize
+coffeeTemperature
+coffeeSugarLevel
+```
+
+It also has:
+
+```text
+calculateTotal()
+displayOrder()
+```
+
+where `displayOrder()` overrides the parent method.
 
 ---
 
-## SUMMARY
+## `BreadOrder`
 
-| Concept               | Meaning                                                                           |
-| --------------------- | --------------------------------------------------------------------------------- |
-| **Constructor**       | Initializes an object when it is created                                          |
-| **Inheritance**       | Allows a child class to acquire accessible fields and methods from a parent class |
-| **Encapsulation**     | Hides/protects data and controls how it is accessed                               |
-| **`super()`**         | Calls the parent class constructor                                                |
-| **Method Overriding** | Allows a child class to create its own version of an inherited method             |
-| **`@Override`**       | Tells Java that a method is intended to override a parent method                  |
+Inherits the common information from `OrderProgram` and adds:
 
-### Final Reminder
+```text
+breadType
+flavor
+size
+```
+
+It also has:
+
+```text
+calculateTotal()
+displayOrder()
+```
+
+where `displayOrder()` overrides the parent method.
+
+---
+
+# SUMMARY
+
+| Concept               | Meaning                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| **Constructor**       | Initializes an object when it is created                                              |
+| **Inheritance**       | Allows a child class to acquire accessible properties and methods from a parent class |
+| **Encapsulation**     | Protects data by controlling how it can be accessed                                   |
+| **`super()`**         | Calls the parent class constructor                                                    |
+| **`super.method()`**  | Calls a method from the parent class                                                  |
+| **Method Overriding** | Allows a child class to create its own version of an inherited method                 |
+| **`@Override`**       | Tells Java that a method is intended to override a parent method                      |
+
+---
+
+# FINAL REMINDER
 
 ```text
 Constructor
@@ -412,6 +697,28 @@ Encapsulation
 super()
 = calls the parent constructor
 
+super.method()
+= calls the parent's method
+
 Overriding
 = child creates its own version of the parent's method
+
+@Override
+= tells Java that the method is overriding a parent method
 ```
+
+The main idea of this program is:
+
+```text
+                 OrderProgram
+                 /           \
+                /             \
+               ↓               ↓
+        CoffeeOrder        BreadOrder
+               |               |
+               ↓               ↓
+      Coffee-specific     Bread-specific
+         information         information
+```
+
+This allows the program to reuse common order information while giving `CoffeeOrder` and `BreadOrder` their own specialized data and behavior.
