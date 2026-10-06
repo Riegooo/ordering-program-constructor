@@ -55,7 +55,6 @@ class FoodOrder extends OrderProgram {
         super.displayOrder();
 
         System.out.println("\nCategory : Food");
-
         System.out.println("\nItem Quantity : " + quantity);
         System.out.println("Total Price : " + calculateTotal());
     }
@@ -86,8 +85,11 @@ public class Main {
 
         FoodOrder food_order = new FoodOrder("Riego", "Burger", 120.00, 2);
         DrinkOrder drink_order = new DrinkOrder("Riego", "Iced Coffee", 190.00, "Lagre");
+
         food_order.displayOrder();
+
         System.out.println();
+        
         drink_order.displayOrder();
 
     }
