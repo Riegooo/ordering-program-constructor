@@ -1,16 +1,14 @@
 package Ordering_program;
 
-class OrderProgram {
-
+class Order {
     private String customerName;
-    private String item;
+    private String orderName;
     private double price;
     private int quantity;
 
-    public OrderProgram(String customerName, String item, double price, int quantity) {
-
+    public Order(String customerName, String orderName, double price, int quantity) {
         this.customerName = customerName;
-        this.item = item;
+        this.orderName = orderName;
         this.price = price;
         this.quantity = quantity;
     }
@@ -19,8 +17,8 @@ class OrderProgram {
         return customerName;
     }
 
-    public String getItem() {
-        return item;
+    public String getOrderName() {
+        return orderName;
     }
 
     public double getPrice() {
@@ -31,99 +29,88 @@ class OrderProgram {
         return quantity;
     }
 
-    public void displayOrder() {
+    public double calculateTotal() {
+        return getPrice() * getQuantity();
+    }
 
+    public void displayOrder() {
         System.out.println("Customer Name : " + customerName);
-        System.out.println("Item Name     : " + item);
+        System.out.println("Order Name    : " + orderName);
         System.out.println("Item Price    : " + price);
         System.out.println("Quantity      : " + quantity);
+        System.out.println("Total Price : " + calculateTotal());
     }
 }
 
 
-class CoffeeOrder extends OrderProgram {
-
-    private String coffeeName;
-    private String coffeeType;
-    private String coffeeSize;
-    private String coffeeTemperature;
-    private String coffeeSugarLevel;
+class CoffeeOrder extends Order {
+    private String type;
+    private String size;
+    private String temperature;
+    private String sugarLevel;
 
     public CoffeeOrder(
-            String customerName, String item, double price, int quantity, String coffeeName, String coffeeType,
-            String coffeeSize, String coffeeTemperature, String coffeeSugarLevel
+            String customerName, String orderName, double price, int quantity, String Type,
+            String Size, String Temperature, String SugarLevel
     ) {
 
-        super(customerName, item, price, quantity);
-
-        this.coffeeName = coffeeName;
-        this.coffeeType = coffeeType;
-        this.coffeeSize = coffeeSize;
-        this.coffeeTemperature = coffeeTemperature;
-        this.coffeeSugarLevel = coffeeSugarLevel;
+        super(customerName, orderName, price, quantity);
+        this.type = Type;
+        this.size = Size;
+        this.temperature = Temperature;
+        this.sugarLevel = SugarLevel;
     }
 
-    public String getCoffeeName() {
-        return coffeeName;
+    public String getType() {
+        return type;
     }
 
-    public String getCoffeeType() {
-        return coffeeType;
+    public String getSize() {
+        return size;
     }
 
-    public String getCoffeeSize() {
-        return coffeeSize;
+    public String getTemperature() {
+        return temperature;
     }
 
-    public String getCoffeeTemperature() {
-        return coffeeTemperature;
-    }
-
-    public String getCoffeeSugarLevel() {
-        return coffeeSugarLevel;
-    }
-
-    public double calculateTotal() {
-        return getPrice() * getQuantity();
+    public String getSugarLevel() {
+        return sugarLevel;
     }
 
     @Override
     public void displayOrder() {
 
         super.displayOrder();
-
         System.out.println("Category    : Coffee");
-        System.out.println("Coffee Name : " + coffeeName);
-        System.out.println("Coffee Type : " + coffeeType);
-        System.out.println("Coffee Size : " + coffeeSize);
-        System.out.println("Temperature : " + coffeeTemperature);
-        System.out.println("Sugar Level : " + coffeeSugarLevel);
-        System.out.println("Total Price : " + calculateTotal());
+        System.out.println("Coffee Type : " + type);
+        System.out.println("Coffee Size : " + size);
+        System.out.println("Temperature : " + temperature);
+        System.out.println("Sugar Level : " + sugarLevel);
     }
 }
 
 
 
-class BreadOrder extends OrderProgram {
+class BreadOrder extends Order {
 
-    private String breadType;
+    private String type;
     private String flavor;
     private String size;
 
     public BreadOrder(
-            String customerName, String item, double price, int quantity,
-            String breadType, String flavor, String size
+            String customerName, String orderName, double price, int quantity,
+            String type, String flavor, String size
     ) {
 
-        super(customerName, item, price, quantity);
+        super(customerName, orderName, price, quantity);
 
-        this.breadType = breadType;
+        this.type = type;
         this.flavor = flavor;
         this.size = size;
     }
 
-    public String getBreadType() {
-        return breadType;
+    public String getType() {
+        return type;
     }
 
     public String getFlavor() {
@@ -133,21 +120,15 @@ class BreadOrder extends OrderProgram {
     public String getSize() {
         return size;
     }
-
-    public double calculateTotal() {
-        return getPrice() * getQuantity();
-    }
-
     @Override
     public void displayOrder() {
 
         super.displayOrder();
 
         System.out.println("Category    : Bread");
-        System.out.println("Bread Type  : " + breadType);
+        System.out.println("Bread Type  : " + type);
         System.out.println("Flavor      : " + flavor);
         System.out.println("Size        : " + size);
-        System.out.println("Total Price : " + calculateTotal());
     }
 }
 
@@ -157,27 +138,25 @@ public class Main {
     public static void main(String[] args) {
 
         CoffeeOrder coffee = new CoffeeOrder(
-                "Cagas",
-                "Coffee",
-                120.00,
-                2,
-                "Caramel Latte",
-                "Latte",
-                "Large",
-                "Iced",
-                "Less Sugar"
+            "Cagas",
+            "Caramel Latte",
+            120.00,
+            2,
+            "Latte",
+            "Large",
+            "Iced",
+            "Less Sugar"
         );
 
         BreadOrder bread = new BreadOrder(
-                "Christian",
-                "Bread",
-                85.00,
-                1,
-                "Croissant",
-                "Chocolate",
-                "Medium"
+            "Christian",
+            "Croissant",
+            85.00,
+            1,
+            "Croissant",
+            "Chocolate",
+            "Medium"
         );
-
 
         System.out.println("===== COFFEE ORDER =====");
         coffee.displayOrder();

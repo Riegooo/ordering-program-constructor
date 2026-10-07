@@ -1,0 +1,61 @@
+ORDERING PROGRAM USING CONSTRUCTOR WITH INHERITANCE AND ENCAPSULATION
+
+ - CONSTRUCTOR : the constructor receives the values and initializes the object
+public Order(String customerName, String item, double price) {
+    this.customerName = customerName;
+    this.item = item;
+    this.price = price;
+}
+
+ - INHERITANCE : allows one class to acquire the properties (fields) and behaviors (methods) of another class
+class FoodOrder extends Order
+
+FoodOrder gets the accessible behavior of Order, such as:
+getCustomerName()
+getItem()
+getPrice()
+displayOrder()
+
+ - ENCAPSULATION : Hiding the data / Protecting data controlling how it is accessed
+private String customerName;
+private String item;
+private double price;
+
+SUPER() : Calls the parent class constructor
+
+METHOD OVERRIDING
+
+The parent has:
+public void displayOrder()
+
+The child also has:
+@Override
+public void displayOrder()
+
+The child is basically saying:
+
+"I want my own version of displayOrder()."
+
+That's method overriding.
+
+=============================================================================
+
+Inheritance = ginagamit mo yung method ng parent.
+Overriding = binabago/redefine mo yung behavior ng inherited method sa child.
+
+METHOD OVERLOADING: Same method from parent, different behavior in child.
+
+
+============= SUPER ==============
+"How do I call the parent's constructor from the child?"
+The answer is:
+super(arguments);
+
+============= INHERITANCE ============
+The main target of inheritance is:
+To allow a child class to reuse the common properties and methods of a parent class instead of writing the same code again.
+
+
+============= ENCAPSULATION ============
+The main target of encapsulation is different.
+Encapsulation protects an object's data by hiding it and controlling how it can be accessed or modified.
